@@ -1,16 +1,18 @@
 package com.ing.customer.restservice.customerservice.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
-@Entity(name = "customer")
+/**
+ * The Customer class is an entity class that is used to store customer details in the database
+ *
+ *
+ * @author Sid
+ */
+@Entity(name = "customer_details")
 public class Customer {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name = "customer_id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "customer_id")
     private Long customerId;
 
     @Column(name = "name")
@@ -22,7 +24,17 @@ public class Customer {
     @Column(name = "credit_score")
     private String creditScore;
 
+    public Customer() {
+    }
 
+    // Constructor without the customerId parameter
+    public Customer(String name, String address, String creditScore) {
+        this.name = name;
+        this.address = address;
+        this.creditScore = creditScore;
+    }
+
+    // Getters and setters
     public Long getCustomerId() {
         return customerId;
     }
@@ -53,16 +65,6 @@ public class Customer {
 
     public void setCreditScore(String creditScore) {
         this.creditScore = creditScore;
-    }
-
-    public Customer(Long customerId, String name, String address, String creditScore) {
-        this.customerId = customerId;
-        this.name = name;
-        this.address = address;
-        this.creditScore = creditScore;
-    }
-
-    public Customer() {
     }
 
     @Override
