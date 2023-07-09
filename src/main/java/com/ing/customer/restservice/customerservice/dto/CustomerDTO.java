@@ -1,11 +1,17 @@
 package com.ing.customer.restservice.customerservice.dto;
 
+/**
+ * The CustomerDTO class is a bean class that is used to store and transfer customer details
+ *
+ *
+ * @author Sid
+ */
 public class CustomerDTO {
     private long id;
     private String name;
     private String address;
     private String creditScore;
-    private String interestRate;
+    private double interestRate;
 
     public long getId() {
         return id;
@@ -39,19 +45,33 @@ public class CustomerDTO {
         this.creditScore = creditScore;
     }
 
-    public String getInterestRate() {
+    public double getInterestRate() {
         return interestRate;
     }
 
-    public void setInterestRate(String interestRate) {
+    public void setInterestRate(double interestRate) {
         this.interestRate = interestRate;
     }
 
-    public CustomerDTO(long id, String name, String address, String creditScore, String interestRate) {
+    public CustomerDTO(long id, String name, String address, String creditScore, double interestRate) {
         this.id = id;
         this.name = name;
         this.address = address;
         this.creditScore = creditScore;
         this.interestRate = interestRate;
+    }
+
+    public CustomerDTO() {
+    }
+
+    @Override
+    public String toString() {
+        return "CustomerDTO{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", address='" + address + '\'' +
+                ", creditScore='" + creditScore + '\'' +
+                ", interestRate=" + interestRate +
+                '}';
     }
 }
