@@ -29,7 +29,7 @@ public class CustomerServiceController {
     private CustomerService customerService;
 
     @Value("${interestRateServiceUrl}")
-    private String interestRateServiceUrl;
+    public String interestRateServiceUrl;
 
     /**
      * Gets the customer details
