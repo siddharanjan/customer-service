@@ -2,6 +2,7 @@ package com.ing.customer.restservice.customerservice.controller;
 
 import com.ing.customer.restservice.customerservice.dto.CustomerDTO;
 import com.ing.customer.restservice.customerservice.dto.InterestRateDTO;
+import com.ing.customer.restservice.customerservice.proxy.CustomerServiceProxy;
 import com.ing.customer.restservice.customerservice.service.CustomerService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -22,6 +23,8 @@ public class CustomerServiceControllerTest {
     @Mock
     private RestTemplate restTemplate;
 
+    @Mock
+    private CustomerServiceProxy customerServiceProxy;
 
     @InjectMocks
     private CustomerServiceController customerServiceController;
@@ -53,7 +56,6 @@ public class CustomerServiceControllerTest {
 
         //Verify that the customerService.getCustomerById() method was called once
         Mockito.verify(customerService, Mockito.times(1)).getCustomerById(1L);
-
         //Verify the returned CustomerDTO object
         assertEquals(customerDTO.getId(), customerWithInterestRate.getId());
         assertEquals(customerDTO.getName(), customerWithInterestRate.getName());
