@@ -2,6 +2,7 @@ package com.ing.customer.restservice.customerservice.controller;
 
 import com.ing.customer.restservice.customerservice.dto.CustomerDTO;
 import com.ing.customer.restservice.customerservice.dto.InterestRateDTO;
+import com.ing.customer.restservice.customerservice.proxy.CustomerServiceProxy;
 import com.ing.customer.restservice.customerservice.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -28,6 +29,9 @@ public class CustomerServiceController {
     @Autowired
     private CustomerService customerService;
 
+    @Autowired
+    public CustomerServiceProxy customerServiceProxy;
+
     @Value("${interestRateServiceUrl}")
     public String interestRateServiceUrl;
 
@@ -48,6 +52,22 @@ public class CustomerServiceController {
         uriVariables.put("creditScore", customerDTO.getCreditScore());
         String url = interestRateServiceUrl + "/{creditScore}";
         ResponseEntity<InterestRateDTO> response = new RestTemplate().getForEntity(url, InterestRateDTO.class, uriVariables);
+        InterestRateDTO interestRateDTO = response.getBody();
+        return new CustomerDTO(customerDTO.getId(), customerDTO.getName(), customerDTO.getAddress(), customerDTO.getCreditScore(), interestRateDTO.getInterestRate());
+    }
+
+    /**
+     * Gets the customer details
+     *
+     * @param id The id of the customer.
+     * @return A CustomerDTO object with the customer details.
+     */
+    @GetMapping("/customer-feign/{id}")
+    public CustomerDTO getCustomerDetailsWithInterestRateFeign(@PathVariable long id) {
+
+        //Get customer details from database
+        CustomerDTO customerDTO = getCustomerById(id);
+        ResponseEntity<InterestRateDTO> response = customerServiceProxy.getInterestRate(customerDTO.getCreditScore());
         InterestRateDTO interestRateDTO = response.getBody();
         return new CustomerDTO(customerDTO.getId(), customerDTO.getName(), customerDTO.getAddress(), customerDTO.getCreditScore(), interestRateDTO.getInterestRate());
     }
